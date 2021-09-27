@@ -3,6 +3,12 @@
     <div class="wrapper">
         <h1>Add admin</h1>
         <br/><br/>
+        <?php 
+        if(isset($_SESSION['add'])){// Checking whether the session is set r not
+            echo $_SESSION['add']; // Display the Sesstion if SEY
+            unset($_SESSION['add']);// remove session message
+        }
+        ?>
         <form action="" method="POST">
             <table class="tbl-30">
                 <tr>
@@ -26,3 +32,37 @@
     </div>
 </div>
 <?php include('path/footer.php') ?>
+<?php
+// Process the value from form and Save it in database
+// check whether the submit button is clicked or not
+if (isset($_POST['submit']))
+{
+    // 1- Get the Data from form
+     $full_name = $_POST['full_name'];
+     $username = $_POST['username'];
+     $password = md5($_POST['password']);  // Password Encryption with MD5
+     // 2- SQL Quary to Save the data into database
+     $sql = "INSERT INTO tbl_admin SET
+      full_name='$full_name',
+      username ='$username',
+      password = '$password'
+     ";
+
+
+    //3- Excuting Query and Saving data into Database
+     $res = mysqli_query($conn, $sql) or die(mysqli_error($conn));
+    //4- Check whether the (Query is Excuted) data is inserted or not and display appropriate message
+    if($res==True){
+        // create a session variable to display message
+        $_SESSION['add'] = 'Admin Added Successfuly';
+        //Redirect page to Manage admin
+        header('location:'.SITEURL.'admin/manage-admin.php');
+    }
+    else{
+        $_SESSION['add'] = 'failed to  Add Admin';
+        //Redirect page to Add admin
+        header('location:'.SITEURL.'admin/add-admin.php');
+    }
+    }
+
+?>
