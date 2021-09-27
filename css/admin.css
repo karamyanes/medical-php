@@ -76,6 +76,15 @@ table tr td {
     background-color: blue;
 }
 
+.success {
+    color: greenyellow;
+    font-weight: bold;
+}
+
+.error {
+    color: green;
+}
+
 
 /*Css for menue*/
 

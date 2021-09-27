@@ -10,6 +10,11 @@
                echo $_SESSION['add'];
                unset($_SESSION['add']); // Removing session message
            }
+           if(isset($_SESSION['delete']))
+           {
+               echo $_SESSION['delete'];
+               unset($_SESSION['delete']);
+           }
            ?>
            <br/><br/><br/>
            <!--button to Add admin -->
@@ -34,7 +39,9 @@
             {
                 // Count rows to chech if we have data in database or not
                 $rowCount = mysqli_num_rows($res);// Function to get all the rows in database
-            if($rowCount>0){
+                $sn=1;// Creat a Variable and assign the value
+
+                if($rowCount>0){
                 //we have data in database
                 while($rows=mysqli_fetch_assoc($res)){
                     //using while loop to get all data from databass
@@ -45,11 +52,11 @@
                     //DIsplay the values in our table
                    ?>
                    <tr>
-                <td><?php echo $id?></td>
+                <td><?php echo $sn++?></td>
                 <td><?php echo $full_name?></td>
                 <td><?php echo $full_name?></td>
-                <td><a href="a" class="btn-secondary">Update Admin</a>
-                <a href="a" class="btn-danger">Delete Admin</a>
+                <td><a href="<?php echo SITEURL; ?>admin/update-admin.php?id=<?php echo $id; ?>" class="btn-secondary">Update Admin</a>
+                <a href="<?php echo SITEURL; ?>admin/delete-admin.php?id=<?php echo $id; ?>" class="btn-danger">Delete Admin</a>
                 </td>
             </tr> 
                    <?php 
